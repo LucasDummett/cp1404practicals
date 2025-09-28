@@ -1,3 +1,6 @@
+"""Perform menu tasks based on user input and score."""
+
+
 MENU = """(G)et a valid score
 (P)rint result
 (S)how stars
@@ -6,6 +9,7 @@ MENU = """(G)et a valid score
 
 
 def main():
+    """Perform MENU options based on user input using functions."""
     score = float(input("Score: "))
     validate_score(score)
     choice = input(MENU).upper()
@@ -24,11 +28,13 @@ def main():
 
 
 def validate_score(score):
+    """Ensure user score is within 0-100 range."""
     while score < 0 or score > 100:
         score = int(input("Invalid score!\nScore: "))
 
 
 def evaluate_score(score):
+    """Return result for user score."""
     if 0 > score or score > 100:
         return "Invalid Score\n"
     elif score >= 90:
@@ -40,6 +46,7 @@ def evaluate_score(score):
 
 
 def print_stars(score):
+    """Print number of stars equal to user score."""
     for i in range(int(score)):
         print('*', end=' ')
     print()
