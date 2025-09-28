@@ -23,6 +23,3 @@ def evaluate_score(score):
 
 
 main()
-
-
-
