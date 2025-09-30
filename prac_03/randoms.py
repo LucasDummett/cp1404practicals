@@ -1,4 +1,4 @@
-from random import randrange
+from random import randint
 
 """
 Question Answers:
@@ -17,4 +17,4 @@ print(random.uniform(2.5, 5.5))  # line 3
 
 
 
-print(randrange(1,100))
+print(randint(1,100))
