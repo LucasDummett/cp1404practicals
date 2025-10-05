@@ -20,7 +20,6 @@ number_of_days = INITIAL_DATE
 price = INITIAL_PRICE
 
 
-
 with open(FILENAME, 'w') as out_file:
     print(f"Starting price: ${INITIAL_PRICE:,.2f}\n", file=out_file)
     while MIN_PRICE <= price <= MAX_PRICE:
