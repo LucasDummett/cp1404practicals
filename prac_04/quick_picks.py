@@ -42,7 +42,7 @@ def generate_quick_picks(number_of_quick_picks):  # ASK LINDSAY IF THIS FUNCTION
 def print_quick_picks(all_quick_picks):
     """Print each list by joining the spaces in the quick pick lines."""
     for quick_pick in all_quick_picks:
-        print(" ".join(f"{quick_pick:2}" for quick_pick in quick_pick))
+        print(" ".join(f"{quick_pick_number:2}" for quick_pick_number in quick_pick))
 
 
 main()
