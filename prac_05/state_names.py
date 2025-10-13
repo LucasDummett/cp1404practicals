@@ -9,15 +9,15 @@ CODE_TO_NAME = {"QLD": "Queensland", "NSW": "New South Wales", "NT": "Northern T
 print(CODE_TO_NAME)
 
 state_code = input("Enter short state: ").upper()
-is_valid_input = False
-while not is_valid_input:
+
+while state_code != "":
     try:
         print(state_code, "is", CODE_TO_NAME[state_code])
-        is_valid_input = True
+        state_code = input("Enter short state: ").upper()
     except KeyError:
         print("Invalid short state")
         state_code = input("Enter short state: ").upper()
 
 
-for code in CODE_TO_NAME:
-    print(f"{code:3} is {CODE_TO_NAME[code]}")
+for code, name in CODE_TO_NAME.items():
+    print(f"{code:3} is {name}")
