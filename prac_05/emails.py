@@ -29,7 +29,3 @@ while user_email != "":
 print("\n")  # To follow Lindsay's formatting
 for username, email in name_to_email.items():
     print(f"{username} ({email})")
-
-
-
-
