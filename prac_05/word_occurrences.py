@@ -14,5 +14,3 @@ max_length_word = max(len(word) for word, count in words_and_counts)
 
 for word, count in words_and_counts:
     print(f"{word:{max_length_word}} : {count}")
-
-
