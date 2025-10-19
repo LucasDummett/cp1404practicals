@@ -5,7 +5,7 @@ Actual: 40 Minutes
 """
 
 word_to_count = {}
-user_string = input("Please write a sentence: ").strip().split(" ")
+user_string = input("Please write a sentence: ").strip().split()
 for word in user_string:
     word_to_count[word] = word_to_count.get(word, 0) + 1
 words_and_counts = sorted(word_to_count.items())
