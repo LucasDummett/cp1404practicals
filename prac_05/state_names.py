@@ -13,10 +13,10 @@ state_code = input("Enter short state: ").upper()
 while state_code != "":
     try:
         print(state_code, "is", CODE_TO_NAME[state_code])
-        state_code = input("Enter short state: ").upper()
+
     except KeyError:
         print("Invalid short state")
-        state_code = input("Enter short state: ").upper()
+    state_code = input("Enter short state: ").upper()
 
 
 for code, name in CODE_TO_NAME.items():
