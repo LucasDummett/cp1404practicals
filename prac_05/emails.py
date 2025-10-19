@@ -4,28 +4,27 @@ Estimate: 20 Minutes
 Actual: 50 Minutes
 """
 
-name_to_email = {}
+email_to_name = {}
 
-user_email = input("Email: ")
 
-while user_email != "":
-    user_email_parts = user_email.strip().split("@")
-    user_names = user_email_parts[0].split(".")
-    for i in range(len(user_names)):  #Capitalise the names
-        user_names[i] = user_names[i].title()
-    username = " ".join(user_names)
-    username_correct = input(f"Is your name {username}? (Y/n) ").upper()
+def main():
+    user_email = input("Email: ").strip()
+    while user_email != "":
+        extracted_name = extract_name(user_email)
+        username_correct = input(f"Is your name {extracted_name}? (Y/n) ").strip().upper()
+        if username_correct == "N":
+            extracted_name = input("Name: ").strip().title()
+        email_to_name[user_email] = extracted_name
+        user_email = input("Email: ").strip()
+    print()  # To follow Lindsay's formatting
+    for email, name in email_to_name.items():
+        print(f"{name} ({email})")
 
-    if username_correct == "N":
-        user_names = input("Name: ").split(" ")
-        for i in range(len(user_names)):  # Capitalise the names
-            user_names[i] = user_names[i].title()
-        username = " ".join(user_names)
 
-    name_to_email[username] = user_email
+def extract_name(email):
+    username = email.split("@")[0]
+    user_names = username.split(".")
+    return " ".join(name.title() for name in user_names)
 
-    user_email = input("Email: ")
 
-print("\n")  # To follow Lindsay's formatting
-for username, email in name_to_email.items():
-    print(f"{username} ({email})")
+main()
