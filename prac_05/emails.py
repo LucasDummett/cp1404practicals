@@ -8,6 +8,7 @@ email_to_name = {}
 
 
 def main():
+    """Store user given emails in a dictionary and print them with their names."""
     user_email = input("Email: ").strip()
     while user_email != "":
         extracted_name = extract_name(user_email)
@@ -22,6 +23,7 @@ def main():
 
 
 def extract_name(email):
+    """Extract name from user given email by separating via '@' and '.'"""
     username = email.split("@")[0]
     user_names = username.split(".")
     return " ".join(name.title() for name in user_names)
