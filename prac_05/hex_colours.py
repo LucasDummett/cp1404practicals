@@ -11,7 +11,6 @@ colour = input("Enter colour: ").lower()
 while colour != "":
     try:
         print(colour, "is", COLOUR_TO_HEX_CODE[colour])
-        colour = input("Enter colour: ").lower()
     except KeyError:
         print("Invalid colour")
-        colour = input("Enter colour: ").lower()
+    colour = input("Enter colour: ").lower()
