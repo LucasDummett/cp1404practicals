@@ -1,4 +1,5 @@
 from prac_06.programming_language import ProgrammingLanguage
+
 """
 Estimated Time: 25min
 Actual Time: 30min
@@ -10,7 +11,7 @@ visual_basic = ProgrammingLanguage("Visual Basic", "Static", False, 1991)
 
 languages = [python, ruby, visual_basic]
 
-dynamic_languages = [langauge for langauge in languages if langauge.is_dynamic()]
+dynamic_languages = [language for language in languages if language.is_dynamic()]
+print("The dynamically typed languages are:")
 for langauge in dynamic_languages:
     print(langauge.name)
-
