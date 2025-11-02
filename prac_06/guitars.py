@@ -26,7 +26,7 @@ def main():
     guitars.append(Guitar("Line 6 JTV-59", 2010, 1512.9))
 
     if guitars:
-        print("These are my guitars: ")
+        print("These are my guitars:")
 
         max_name_length = max(len(guitar.name) for guitar in guitars)
         max_cost_length = max(len(f"{guitar.cost}") for guitar in guitars)
@@ -37,7 +37,8 @@ def main():
             if guitar.is_vintage():
                 vintage_string = "(vintage)"
             print(
-                f"Guitar {i}: {guitar.name:>{max_name_length}} ({guitar.year}), worth ${guitar.cost:>{max_cost_length},.2f} {vintage_string}")
+                f"Guitar {i}: {guitar.name:>{max_name_length}} ({guitar.year}), "
+                f"worth ${guitar.cost:>{max_cost_length},.2f} {vintage_string}")
 
     else:
         print("Currently no guitars, why not add one?")
