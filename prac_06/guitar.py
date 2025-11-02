@@ -6,6 +6,7 @@ class Guitar:
     """Class for guitars based on details."""
 
     def __init__(self, name="", year=0, cost=0):
+        """Initialise a guitar instance."""
         self.name = name
         self.year = year
         self.cost = cost
@@ -15,9 +16,9 @@ class Guitar:
         return f"{self.name} ({self.year}) : ${self.cost:,.2f}"
 
     def get_age(self):
-        """Returns the age of the guitar in years."""
+        """Return the age of the guitar in years."""
         return CURRENT_YEAR - self.year
 
     def is_vintage(self):
-        """Returns True if guitar age is greater or equal to 50 years"""
+        """Return boolean for whether guitar age is greater or equal to 50 years."""
         return self.get_age() >= VINTAGE_AGE
