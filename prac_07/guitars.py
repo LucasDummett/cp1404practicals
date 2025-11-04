@@ -18,7 +18,7 @@ def main():
     display_guitars(guitars)
     name = input("Name: ")
     while name != "":
-        year = str(input("Year: "))
+        year = int(input("Year: "))
         cost = float(input("Cost: "))
         add_guitar = Guitar(name, year, cost)
         guitars.append(add_guitar)
@@ -35,18 +35,16 @@ def main():
 
     with open(FILENAME, "w", encoding="utf-8-sig") as out_file:
         for guitar in guitars:
-            out_file.write(f"{guitar.name}, {guitar.year}, {guitar.cost}\n")
+            out_file.write(f"{guitar.name},{guitar.year},{guitar.cost}\n")
 
 
 def load_guitars(guitars):
     with open(FILENAME, "r", encoding="utf-8-sig") as in_file:
-        # 'Consume' the first line (header) - we don't need its contents
-        in_file.readline()
         for line in in_file:
             parts = line.strip().split(',')
             # Construct a ProgrammingLanguage object using the elements
             # year should be an int
-            guitar = Guitar(parts[0], parts[1], float(parts[2]))
+            guitar = Guitar(parts[0], int(parts[1]), float(parts[2]))
             # Add the language we've just constructed to the list
             guitars.append(guitar)
 
