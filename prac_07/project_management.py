@@ -5,16 +5,31 @@ TEST_FILE = "test.txt"
 
 
 def main():
+    print("Welcome to Project Management Program:")
     projects = load_projects(FILENAME)
-    save_projects(TEST_FILE, projects)
+    print(f"Loaded {len(projects)} projects from {FILENAME}")
     display_menu()
-    display_projects(projects)
+    choice = input(">>>").upper()
+    while choice != "Q":
+        if choice == "L":
+            filename = input("Filename: ")
+            projects = load_projects(filename)
+
+        elif choice == "S":
+            filename = input("Filename: ")
+            save_projects(filename, projects)
+            for project in projects:
+                print(project)
+        elif choice == "D":
+            display_projects(projects)
+        display_menu()
+        choice = input(">>>").upper()
 
 
 def load_projects(filename):
     """Load projects from file projects.txt."""
     projects = []
-    with open(filename, "r", encoding="utf-8") as infile:
+    with open(filename, "r") as infile:
         infile.readline()
         for line in infile:
             parts = line.strip().split("\t")
@@ -26,11 +41,11 @@ def load_projects(filename):
 
 def save_projects(filename, projects):
     """Save projects to file."""
-    with open(filename, "w", encoding="utf-8") as outfile:
+    with open(filename, "w") as outfile:
         print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=outfile)
         for project in projects:
-            print(f"{project.name} \t{project.start_date} \t{project.priority} \t{project.cost_estimate} "
-                  f"\t{project.completion_percentage}", file=outfile)
+            print(f"{project.name}\t{project.start_date.strftime('%d/%m/%Y')}\t{project.priority}"
+                  f"\t{project.cost_estimate}\t{project.completion_percentage}", file=outfile)
 
 
 def display_menu():
@@ -48,11 +63,11 @@ def display_projects(projects):
     print("Incomplete projects:")
     for project in projects:
         if project.completion_percentage != 100:
-            print(project)
+            print(str(project))
     print("Complete projects:")
     for project in projects:
         if project.completion_percentage == 100:
-            print(project)
+            print(str(project))
 
 
 main()
