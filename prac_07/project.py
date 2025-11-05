@@ -19,7 +19,7 @@ class Project:
         self.cost_estimate = float(cost_estimate)
         self.completion_percentage = int(completion_percentage)
 
-    def __repr__(self):
+    def __str__(self):
         """String representation of a project."""
         return (f"{self.name}, start: {self.start_date.strftime('%d/%m/%Y')}, priority {self.priority}, "
                 f"estimate: ${self.cost_estimate:.2f}, completion: {self.completion_percentage}%")
