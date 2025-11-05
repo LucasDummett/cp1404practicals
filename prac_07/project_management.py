@@ -7,6 +7,8 @@ TEST_FILE = "test.txt"
 def main():
     projects = load_projects(FILENAME)
     save_projects(TEST_FILE, projects)
+    display_menu()
+    display_projects(projects)
 
 
 def load_projects(filename):
@@ -29,6 +31,28 @@ def save_projects(filename, projects):
         for project in projects:
             print(f"{project.name} \t{project.start_date} \t{project.priority} \t{project.cost_estimate} "
                   f"\t{project.completion_percentage}", file=outfile)
+
+
+def display_menu():
+    """Display menu options."""
+    print("""- (L)oad projects
+- (S)ave projects
+- (D)isplay projects
+- (F)ilter projects by date
+- (A)dd new project
+- (U)pdate project
+- (Q)uit""")
+
+
+def display_projects(projects):
+    print("Incomplete projects:")
+    for project in projects:
+        if project.completion_percentage != 100:
+            print(project)
+    print("Complete projects:")
+    for project in projects:
+        if project.completion_percentage == 100:
+            print(project)
 
 
 main()
