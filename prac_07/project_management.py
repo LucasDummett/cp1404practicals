@@ -4,33 +4,39 @@ import datetime
 
 DEFAULT_FILENAME = "projects.txt"
 TEST_FILE = "test.txt"
+COMPLETE_PERCENTAGE = 100
 
 
 def main():
+    current_filename = DEFAULT_FILENAME
     print("Welcome to Project Management Program:")
-    projects = load_projects(DEFAULT_FILENAME)
-    print(f"Loaded {len(projects)} projects from {DEFAULT_FILENAME}")
+    projects = load_projects(current_filename)
+    print(f"Loaded {len(projects)} projects from {current_filename}")
+
     display_menu()
-    choice = input(">>>").upper()
+    choice = input(">>> ").strip().upper()
     while choice != "Q":
         if choice == "L":
-            filename = input("Filename: ")
-            projects = load_projects(filename)
+            current_filename = input("Filename: ").strip()
+            projects = load_projects(current_filename)
+
         elif choice == "S":
-            filename = input("Filename: ")
-            save_projects(filename, projects)
-            for project in projects:
-                print(project)
+            current_filename = input("Filename: ").strip()
+            save_projects(current_filename, projects)
+            print(f"Saved {len(projects)} projects to {current_filename}")
+
         elif choice == "D":
             display_projects(projects)
+
         elif choice == "F":
             # Different input prompt to Lindsay's to be more instructive for user (Year is actually yyyy not yy).
-            given_date = input("Show projects that start after date (dd/mm/yyyy): ")
-            date = datetime.datetime.strptime(given_date, "%d/%m/%Y").date()
-            projects.sort(key=attrgetter("start_date"))
-            for project in projects:
-                if project.is_after(date):
+            given_date = input("Show projects that start after date (dd/mm/yyyy): ").strip()
+            threshold_date = datetime.datetime.strptime(given_date, "%d/%m/%Y").date()
+
+            for project in sorted(projects, key=attrgetter("start_date")):
+                if project.is_after(threshold_date):
                     print(project)
+
         elif choice == "A":
             print("Let's add a new project")
             completion_percentage, cost_estimate, name, priority, start_date = get_project_details()
@@ -39,36 +45,44 @@ def main():
         elif choice == "U":
             for i, project in enumerate(projects):
                 print(f"{i} {project}")
-            project_selection = projects[int(input("Project choice: "))]
+            try:
+                project_selection = projects[int(input("Project choice: ").strip())]
+            except (ValueError, IndexError):
+                print("Invalid Selection")
+                display_menu()
+                choice = input(">>> ").strip().upper()
+                continue
+
             print(project_selection)
-            completion_percentage_input = input("New Percentage: ")
-            priority_input = input("New Priority: ")
+            completion_percentage_input = input("New Percentage: ").strip()
+            priority_input = input("New Priority: ").strip()
             if completion_percentage_input != "":
                 project_selection.completion_percentage = int(completion_percentage_input)
             if priority_input != "":
                 project_selection.priority = int(priority_input)
 
         display_menu()
-        choice = input(">>>").upper()
-    if input("Would you like to save to projects.txt? ").upper() == "YES" or "Y":
-        save_projects(DEFAULT_FILENAME, projects)
+        choice = input(">>>").strip().upper()
+
+    if input(f"Would you like to save to {current_filename} ").strip().upper() in ["YES", "Y"]:
+        save_projects(current_filename, projects)
     print("Thank you for using custom-built project management software.")
 
 
 def get_project_details():
-    name = input("Name: ")
-    start_date = input("Start date (dd/mm/yyyy): ")
-    priority = input("Priority: ")
-    cost_estimate = input("Cost estimate: $")
-    completion_percentage = input("Percent complete: ")
+    name = input("Name: ").strip()
+    start_date = input("Start date (dd/mm/yyyy): ").strip()
+    priority = input("Priority: ").strip()
+    cost_estimate = input("Cost estimate: $").strip()
+    completion_percentage = input("Percent complete: ").strip()
     return completion_percentage, cost_estimate, name, priority, start_date
 
 
 def load_projects(filename):
     """Load projects from file projects.txt."""
     projects = []
-    with open(filename, "r") as infile:
-        infile.readline()
+    with open(filename, "r", encoding="utf-8") as infile:
+        infile.readline()  # Skip header.
         for line in infile:
             parts = line.strip().split("\t")
             projects.append(Project(name=parts[0], start_date=parts[1], priority=parts[2], cost_estimate=parts[3],
@@ -78,7 +92,7 @@ def load_projects(filename):
 
 def save_projects(filename, projects):
     """Save projects to file."""
-    with open(filename, "w") as outfile:
+    with open(filename, "w", encoding="utf-8") as outfile:
         print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=outfile)
         for project in projects:
             print(f"{project.name}\t{project.start_date.strftime('%d/%m/%Y')}\t{project.priority}"
@@ -99,12 +113,12 @@ def display_menu():
 def display_projects(projects):
     print("Incomplete projects:")
     for project in sorted(projects):
-        if project.completion_percentage != 100:
-            print(project)
-    print("Complete projects:")
+        if project.completion_percentage != COMPLETE_PERCENTAGE:
+            print(f"\t{project}")
+    print("Completed projects:")
     for project in sorted(projects):
-        if project.completion_percentage == 100:
-            print(project)
+        if project.completion_percentage == COMPLETE_PERCENTAGE:
+            print(f"\t{project}")
 
 
 main()
