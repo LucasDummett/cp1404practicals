@@ -92,11 +92,10 @@ def load_projects(filename):
 
 def save_projects(filename, projects):
     """Save projects to file."""
-    with open(filename, "w", encoding="utf-8") as outfile:
-        print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=outfile)
+    with open(filename, "w", encoding="utf-8") as out_file:
+        print("Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage", file=out_file)
         for project in projects:
-            print(f"{project.name}\t{project.start_date.strftime('%d/%m/%Y')}\t{project.priority}"
-                  f"\t{project.cost_estimate}\t{project.completion_percentage}", file=outfile)
+            print(project.detail_to_row(), file=out_file)
 
 
 def display_menu():

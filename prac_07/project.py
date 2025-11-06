@@ -5,8 +5,6 @@ Actual: 30 mins
 
 import datetime
 
-COMPLETE = 100
-
 
 class Project:
     """Class representing a project."""
@@ -29,3 +27,7 @@ class Project:
 
     def is_after(self, given_date):
         return self.start_date >= given_date
+
+    def detail_to_row(self) -> str:
+        return (f"{self.name}\t{self.start_date.strftime('%d/%m/%Y')}\t"
+                f"{self.priority}\t{self.cost_estimate}\t{self.completion_percentage}")
