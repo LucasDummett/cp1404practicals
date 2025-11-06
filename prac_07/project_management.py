@@ -2,14 +2,14 @@ from project import Project
 from operator import attrgetter
 import datetime
 
-FILENAME = "projects.txt"
+DEFAULT_FILENAME = "projects.txt"
 TEST_FILE = "test.txt"
 
 
 def main():
     print("Welcome to Project Management Program:")
-    projects = load_projects(FILENAME)
-    print(f"Loaded {len(projects)} projects from {FILENAME}")
+    projects = load_projects(DEFAULT_FILENAME)
+    print(f"Loaded {len(projects)} projects from {DEFAULT_FILENAME}")
     display_menu()
     choice = input(">>>").upper()
     while choice != "Q":
@@ -36,15 +36,30 @@ def main():
             completion_percentage, cost_estimate, name, priority, start_date = get_project_details()
             projects.append(Project(name=name, start_date=start_date, priority=priority, cost_estimate=cost_estimate,
                                     completion_percentage=completion_percentage))
+        elif choice == "U":
+            for i, project in enumerate(projects):
+                print(f"{i} {project}")
+            project_selection = projects[int(input("Project choice: "))]
+            print(project_selection)
+            completion_percentage_input = input("New Percentage: ")
+            priority_input = input("New Priority: ")
+            if completion_percentage_input != "":
+                project_selection.completion_percentage = int(completion_percentage_input)
+            if priority_input != "":
+                project_selection.priority = int(priority_input)
+
         display_menu()
         choice = input(">>>").upper()
+    if input("Would you like to save to projects.txt? ").upper() == "YES" or "Y":
+        save_projects(DEFAULT_FILENAME, projects)
+    print("Thank you for using custom-built project management software.")
 
 
 def get_project_details():
     name = input("Name: ")
     start_date = input("Start date (dd/mm/yyyy): ")
     priority = input("Priority: ")
-    cost_estimate = input("Cost estimate: ")
+    cost_estimate = input("Cost estimate: $")
     completion_percentage = input("Percent complete: ")
     return completion_percentage, cost_estimate, name, priority, start_date
 
@@ -58,7 +73,6 @@ def load_projects(filename):
             parts = line.strip().split("\t")
             projects.append(Project(name=parts[0], start_date=parts[1], priority=parts[2], cost_estimate=parts[3],
                                     completion_percentage=parts[4]))
-        projects.sort(key=attrgetter("priority"))
     return projects
 
 
@@ -84,11 +98,11 @@ def display_menu():
 
 def display_projects(projects):
     print("Incomplete projects:")
-    for project in projects:
+    for project in sorted(projects):
         if project.completion_percentage != 100:
             print(project)
     print("Complete projects:")
-    for project in projects:
+    for project in sorted(projects):
         if project.completion_percentage == 100:
             print(project)
 
