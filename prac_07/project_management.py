@@ -1,4 +1,6 @@
 from project import Project
+from operator import attrgetter
+import datetime
 
 FILENAME = "projects.txt"
 TEST_FILE = "test.txt"
@@ -14,7 +16,6 @@ def main():
         if choice == "L":
             filename = input("Filename: ")
             projects = load_projects(filename)
-
         elif choice == "S":
             filename = input("Filename: ")
             save_projects(filename, projects)
@@ -22,8 +23,30 @@ def main():
                 print(project)
         elif choice == "D":
             display_projects(projects)
+        elif choice == "F":
+            # Different input prompt to Lindsay's to be more instructive for user (Year is actually yyyy not yy).
+            given_date = input("Show projects that start after date (dd/mm/yyyy): ")
+            date = datetime.datetime.strptime(given_date, "%d/%m/%Y").date()
+            projects.sort(key=attrgetter("start_date"))
+            for project in projects:
+                if project.is_after(date):
+                    print(project)
+        elif choice == "A":
+            print("Let's add a new project")
+            completion_percentage, cost_estimate, name, priority, start_date = get_project_details()
+            projects.append(Project(name=name, start_date=start_date, priority=priority, cost_estimate=cost_estimate,
+                                    completion_percentage=completion_percentage))
         display_menu()
         choice = input(">>>").upper()
+
+
+def get_project_details():
+    name = input("Name: ")
+    start_date = input("Start date (dd/mm/yyyy): ")
+    priority = input("Priority: ")
+    cost_estimate = input("Cost estimate: ")
+    completion_percentage = input("Percent complete: ")
+    return completion_percentage, cost_estimate, name, priority, start_date
 
 
 def load_projects(filename):
@@ -35,7 +58,7 @@ def load_projects(filename):
             parts = line.strip().split("\t")
             projects.append(Project(name=parts[0], start_date=parts[1], priority=parts[2], cost_estimate=parts[3],
                                     completion_percentage=parts[4]))
-        projects.sort()
+        projects.sort(key=attrgetter("priority"))
     return projects
 
 
@@ -63,11 +86,11 @@ def display_projects(projects):
     print("Incomplete projects:")
     for project in projects:
         if project.completion_percentage != 100:
-            print(str(project))
+            print(project)
     print("Complete projects:")
     for project in projects:
         if project.completion_percentage == 100:
-            print(str(project))
+            print(project)
 
 
 main()
