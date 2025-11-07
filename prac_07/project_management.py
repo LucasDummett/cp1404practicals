@@ -3,7 +3,6 @@ from operator import attrgetter
 import datetime
 
 DEFAULT_FILENAME = "projects.txt"
-TEST_FILE = "test.txt"
 COMPLETE_PERCENTAGE = 100
 
 
@@ -40,8 +39,12 @@ def main():
         elif choice == "A":
             print("Let's add a new project")
             completion_percentage, cost_estimate, name, priority, start_date = get_project_details()
-            projects.append(Project(name=name, start_date=start_date, priority=priority, cost_estimate=cost_estimate,
-                                    completion_percentage=completion_percentage))
+            start_date = datetime.datetime.strptime(start_date, "%d/%m/%Y").date()
+            cost_estimate = float(cost_estimate)
+            completion_percentage = int(completion_percentage)
+            priority = int(priority)
+            projects.append(Project(name=name, start_date=start_date, priority=priority,
+                                    cost_estimate=cost_estimate, completion_percentage=completion_percentage))
         elif choice == "U":
             for i, project in enumerate(projects):
                 print(f"{i} {project}")
@@ -62,14 +65,15 @@ def main():
                 project_selection.priority = int(priority_input)
 
         display_menu()
-        choice = input(">>>").strip().upper()
+        choice = input(">>> ").strip().upper()
 
-    if input(f"Would you like to save to {current_filename} ").strip().upper() in ["YES", "Y"]:
+    if input(f"Would you like to save to {current_filename}? ").strip().upper() in {"YES", "Y"}:  # Check for yes or y.
         save_projects(current_filename, projects)
     print("Thank you for using custom-built project management software.")
 
 
 def get_project_details():
+    """Get user inputs."""
     name = input("Name: ").strip()
     start_date = input("Start date (dd/mm/yyyy): ").strip()
     priority = input("Priority: ").strip()
@@ -79,14 +83,18 @@ def get_project_details():
 
 
 def load_projects(filename):
-    """Load projects from file projects.txt."""
+    """Load projects from file."""
     projects = []
     with open(filename, "r", encoding="utf-8") as infile:
         infile.readline()  # Skip header.
         for line in infile:
             parts = line.strip().split("\t")
-            projects.append(Project(name=parts[0], start_date=parts[1], priority=parts[2], cost_estimate=parts[3],
-                                    completion_percentage=parts[4]))
+            start_date = datetime.datetime.strptime(parts[1], "%d/%m/%Y").date()
+            cost_estimate = float(parts[3])
+            completion_percentage = int(parts[4])
+            priority = int(parts[2])
+            projects.append(Project(name=parts[0], start_date=start_date, priority=priority,
+                                    cost_estimate=cost_estimate, completion_percentage=completion_percentage))
     return projects
 
 
@@ -110,6 +118,7 @@ def display_menu():
 
 
 def display_projects(projects):
+    """Display incompleted and completed projects. """
     print("Incomplete projects:")
     for project in sorted(projects):
         if project.completion_percentage != COMPLETE_PERCENTAGE:
