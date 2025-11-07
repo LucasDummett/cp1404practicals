@@ -40,7 +40,8 @@ def main():
         print(language)
 
 
-main()
+if __name__ == "__main__":
+    main()
 
 
 def using_csv():
