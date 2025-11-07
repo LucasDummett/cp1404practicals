@@ -1,9 +1,9 @@
 import sys
 import os
-from guitar import Guitar
+
 # Add the E drive directory to Python's module search path (To avoid virtual desktop issue)
 sys.path.append(os.path.expanduser(r"E:"))
-
+from guitar import Guitar
 
 FILENAME = "guitars.csv"
 
@@ -28,8 +28,7 @@ def main():
     # Loop through and display all languages (using their str method)
     display_guitars(guitars)
 
-    print()
-    print("Sorted by year:\n")
+    print("-----------------")
 
     guitars.sort()
     display_guitars(guitars)
