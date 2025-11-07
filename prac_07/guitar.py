@@ -24,4 +24,5 @@ class Guitar:
         return self.get_age() >= VINTAGE_AGE
 
     def __lt__(self, other):
+        """Enable sorting by comparing objects based on the year field. """
         return self.year < other.year
