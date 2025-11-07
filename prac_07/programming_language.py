@@ -26,7 +26,7 @@ class ProgrammingLanguage:
 
     def has_pointer_arithmetic(self):
         """Determine if language has pointer arithmetic."""
-        return self.pointer_arithmetic == "True"
+        return self.pointer_arithmetic
 
 
 def run_tests():
