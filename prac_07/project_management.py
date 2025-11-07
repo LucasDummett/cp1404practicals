@@ -12,6 +12,7 @@ COMPLETE_PERCENTAGE = 100
 
 
 def main():
+    """Run menu options to process projects in management plan."""
     current_filename = DEFAULT_FILENAME
     print("Welcome to Project Management Program:")
     projects = load_projects(current_filename)
