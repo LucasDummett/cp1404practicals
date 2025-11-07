@@ -1,3 +1,8 @@
+"""project_management.py client program
+Estimate: 1 hour
+Actual: 3 hours
+"""
+
 from project import Project
 from operator import attrgetter
 import datetime

@@ -1,3 +1,7 @@
+"""guitar.py class
+Estimate: 20 min
+Actual: 15 min"""
+
 CURRENT_YEAR = 2025
 VINTAGE_AGE = 50
 
