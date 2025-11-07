@@ -1,8 +1,7 @@
-import sys
-import os
+"""myguitars.py program
+Estimate: 30 Min
+Actual: 25 Min"""
 
-# Add the E drive directory to Python's module search path (To avoid virtual desktop issue)
-sys.path.append(os.path.expanduser(r"E:"))
 from guitar import Guitar
 
 FILENAME = "guitars.csv"
@@ -10,9 +9,7 @@ FILENAME = "guitars.csv"
 
 def main():
     """Read file of programming language details, save as objects, display."""
-    guitars = []
-    # Open the file for reading
-    load_guitars(guitars)
+    guitars = load_guitars()
 
     print("My guitars!")
     display_guitars(guitars)
@@ -26,19 +23,25 @@ def main():
         name = input("Name: ")
 
     # Loop through and display all languages (using their str method)
+    print("\nAll guitars: ")
     display_guitars(guitars)
-
-    print("-----------------")
-
+    print("\nGuitars sorted by year: ")
     guitars.sort()
     display_guitars(guitars)
 
+    save_guitars(guitars)
+
+
+def save_guitars(guitars):
+    """Save guitars list to output file."""
     with open(FILENAME, "w", encoding="utf-8-sig") as out_file:
         for guitar in guitars:
             out_file.write(f"{guitar.name},{guitar.year},{guitar.cost}\n")
 
 
-def load_guitars(guitars):
+def load_guitars():
+    """Load guitars from input file into guitars list."""
+    guitars = []
     with open(FILENAME, "r", encoding="utf-8-sig") as in_file:
         for line in in_file:
             parts = line.strip().split(',')
@@ -47,11 +50,14 @@ def load_guitars(guitars):
             guitar = Guitar(parts[0], int(parts[1]), float(parts[2]))
             # Add the language we've just constructed to the list
             guitars.append(guitar)
+    return guitars
 
 
 def display_guitars(guitars):
+    """Print guitars."""
     for guitar in guitars:
         print(guitar)
 
 
-main()
+if __name__ == "__main__":
+    main()
