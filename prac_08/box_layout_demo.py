@@ -1,6 +1,4 @@
 """
-CP1404
-Modified by William Hunter
 Estimated: 15 mins
 Actual: 20 mins
 """
