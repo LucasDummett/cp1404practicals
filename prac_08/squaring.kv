@@ -1,0 +1,21 @@
+BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+        TextInput:
+            id: input_number
+            text: '7'
+            font_size: 64
+            multiline: False
+            halign: 'center'  # Found on google, don't know how to vertically align dynamically though
+        Button:
+            text: 'Square'
+            # the following line specifies the function in the app class to call when the button is pressed
+            on_press: app.handle_calculate(input_number.text)
+            font_size: 64
+        Label:
+            id: output_label
+            font_size: 64
+            color: (1, 0.553, 0.631, 1)
+    Label:
+        text: 'Enter a number and press "Square"'
+        font_size: 48
